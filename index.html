@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+	<title>Star Wars RPG</title>
+</head>
+<body>
+
+	<audio id="background-music">
+	  <source src="assets/sfx/gameLose.mp3" type="audio/mpeg">
+	</audio>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12" id="mainLogo">Logo</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12" id="charSelect">Choose your character/enemy</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="player">You</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="messages">Buttons and messages</div>
+			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="enemy">Enemy</div>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+/* FUNCTION LISTS
+	playAudio(audioFile)
+		Pass the ID of the Audio Element you want to play. Plays the audio element one time.
+	rngSfx(sfx)
+		Pass the string of the filename you want to play. Returns that filename with an RNG 1-5.
+
+
+VARIABLE LISTS
+	bkgndVar
+		String that results in bkgnd1, bkgnd2, bkgnd3, bkgnd4, or bkgnd5. Used to setup the background image & music.
+		This should not be used for anything other than initially setting the background elements.
+	bkgndAutio
+		Audio Element. References a different mp3 based on bkgndVar's RNG selection.
+
+
+
+*/
+
+
+
+// SET BACKGROUND IMAGES & AMBIENT MUSIC
+// Load all background music choices
+
+// Choose a random number from 0 - (# of background options)
+var bkgndVar = "bkgnd" + (1 + Math.floor(Math.random() * 5)); //bkgnd2.png & bkgnd2.mp3 will be needed as filenames
+// Use that random number to set the correct background image
+$("body").css("background-image", "url(assets/images/" + bkgndVar + ".png)");
+// Use that random number to set the correct background music
+	// create a "source" item with "src" attribute set to "assets/sfx/"+bkgndVar+".mp3" & "type" set to "audio/mpeg" 
+	  var audioElement = document.createElement("audio");
+	  audioElement.setAttribute("src", "Assets/captainplanet24.mp3");
+// Loop that music endlessly
+var bkgndAudio = document.getElementById("background-music");
+bkgndAudio.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+
+
+
+// INITIALIZE SOUND EFFECTS
+// Load all SFX
+// saberSlice1.mp3, etc.
+// saberCrash1.mp3, etc.
+// Create the function that plays the SFX:
+	function playAudio(audioFile) { 
+		var x = document.getElementById(audioFile); 
+		x.play();
+	} 
+// Create rngSfx(), which will generate a random number from 1-5 each time it's called
+	// Insert which SFX is needed as a string ("multiSaber" "singleSaber" etc.)
+	function rngSfx(sfx) {
+		return sfx + (1 + Math.floor(Math.random() * 5));
+	}
+
+
+// INITIALIZE VARIABLES
+	var curHpPlayer = 0, curAtkPlayer = 0, curHpEnemy = 0;
+//	var playerChar = none, enemyChar = none;
+// GAME STATES: newGame, enemySelect, fight
+	var gameState = "newGame";
+
+// INITIALIZE CHARACTERS
+// Create an object for each character, including Name, pic, atkStart, hpStart, def, id#, sfxSaberOn, sfxSaberOff
+// Display all characters in the charSelect div, including hpStart, atkStart, and def
+// Make character backgrounds white
+
+// if gameState == "newGame"
+	// Listen for player to click a character
+		// Set playerChar to the chosen character's object
+		// Move that character to the "player" div
+		// set curHpPlayer = playerChar.hpStart & curAtkPlayer = playerChar.atkStart
+		// change all Character backgrounds to red
+		// Change playerChar background to gold
+		// play audio playerChar.sfxSaberOn
+		// play audio "background hum"
+		// play audio of character talking, if available
+		// change charSelect div message to "Select Your Opponent"
+		// gameState = "enemySelect"
+
+// if gameState == "enemySelect"
+	// Listen for player to click an opponent
+		// set enemyChar to the chosen opponent
+		// move the chosen opponent into the "enemy" div
+		// set curHpEnemy = enemyChar.hpStart
+		// change enemy bkgnd to black
+		// change charSelect div message to "Fight"
+		// play audio enemyCar.sfxSaberOn
+		// play audio of character talking, if available
+		// Display "Attack" button in "messages" div
+		// gameState ="fight"
+
+// if gameState == "fight"
+	// Listen for player to click "Attack" button
+		// curHpEnemy = curHpEnemy - curAtkPlayer;
+		// curAtkPlayer = curAtkPlayer * 2;
+		// if curHpEnemy > 0
+			// cur HpPlayer = curHpPlayer - enemyChar.atkStart
+			// play audio rngSfx("multiSaber"); // Selects a random multiSaber SFX
+			// if curHpPlayer <= 0
+				// play audio grunt & die
+				// play audio saber retract
+				// Display "You Lose! Press any key to play again." in characters Div
+				// Listen for key press
+					// Move all characters to characters div
+					// curHpPlayer = 0, curAtkPlayer = 0, curHpEnemy = 0
+					// gameState = "newGame"
+		// else
+			// play audio rngSfx("singleSaber"); // Selects a random singleSaber SFX
+			// play audio enemy grunt & die
+			// play audio saber retract
+			// hide enemyChar
+			// if no more characters to fight
+				// stop audio background hum
+				// play audio saber retract
+				// plaly audio victory fanfare
+				// display "You win! Press any key to play again." in characters div
+				// Listen for key press
+					// Move all characters to characters div
+					// curHpPlayer, curAtkPlayer, curHpEnemy = 0
+					// gameState = "newGame"
+			// else
+				// display "Choose Your Next Opponent" in Char Select Screen
+				// gameState = enemySelect
+// 
+
+
+</script>
+
+
+</body>
+</html>
