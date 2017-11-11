@@ -17,22 +17,38 @@
 </head>
 <body>
 
-	<audio id="background-music">
-	  <source src="assets/sfx/gameLose.mp3" type="audio/mpeg">
-	</audio>
+	<audio id="background-music"></audio>
+	<audio id="saberHum"><source src="assets/sfx/saberHum.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOnluke"><source src="assets/sfx/saberOnLuke.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOnobi"><source src="assets/sfx/saberOnObi.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOnvader"><source src="assets/sfx/saberOnVader.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOnmaul"><source src="assets/sfx/saberOnMaul.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOffluke"><source src="assets/sfx/saberOffLuke.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOffobi"><source src="assets/sfx/saberOffObi.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOffvader"><source src="assets/sfx/saberOffVader.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOffmaul"><source src="assets/sfx/saberOffMaul.mp3" type="audio/mpeg"></audio>
+
+	
 
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12" id="mainLogo">Logo</div>
+			<div class="col-lg-6 col-md-6 col-sm-12" id="mainLogo"><img src="assets/images/logo.png" class="img img-responsive center-block" alt="Star Wars: Duels Of The Masters" /></div>
+			<div class="col-lg-6 col-md-6 col-sm-12" align="center">
+				<div class="container-float">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12" id="charSelectTxt"><h1>Choose Your Character</h1></div>
+						<div class="col-lg-12 col-md-12 col-sm-12" id="charSelect"></div>
+					</div>
+				</div>
+				
+			</div>
 		</div>
+
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12" id="charSelect">Choose your character/enemy</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="player">You</div>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="messages">Buttons and messages</div>
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="enemy">Enemy</div>
+			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="playerDiv"></div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="messages"><h1>Buttons and messages</h1></div>
+			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="enemyDiv"><h1>Enemy</h1></div>
 		</div>
 	</div>
 
@@ -51,35 +67,40 @@ VARIABLE LISTS
 		This should not be used for anything other than initially setting the background elements.
 	bkgndAutio
 		Audio Element. References a different mp3 based on bkgndVar's RNG selection.
-
+	luke, obi, maul, vader
+		Objects including each character's starting attributes and direct links to their custom sfx.
 
 
 */
 
 
-
 // SET BACKGROUND IMAGES & AMBIENT MUSIC
 // Load all background music choices
 
+
 // Choose a random number from 0 - (# of background options)
-var bkgndVar = "bkgnd" + (1 + Math.floor(Math.random() * 5)); //bkgnd2.png & bkgnd2.mp3 will be needed as filenames
+var bkgndVar = "bkgnd" + (Math.floor(Math.random() * 5)); //bkgnd2.png & bkgnd2.mp3 will be needed as filenames
+// console.log(bkgndVar);
 // Use that random number to set the correct background image
 $("body").css("background-image", "url(assets/images/" + bkgndVar + ".png)");
 // Use that random number to set the correct background music
 	// create a "source" item with "src" attribute set to "assets/sfx/"+bkgndVar+".mp3" & "type" set to "audio/mpeg" 
-	  var audioElement = document.createElement("audio");
-	  audioElement.setAttribute("src", "Assets/captainplanet24.mp3");
+	  var bkgndAudio = document.createElement("audio");
+	  bkgndAudio.setAttribute("src", "assets/sfx/" + bkgndVar + ".mp3");
+	  bkgndAudio.setAttribute("type", "audio/mpeg");
+	  $("#background-music").append(bkgndAudio);
+	  bkgndAudio.play();
 // Loop that music endlessly
-var bkgndAudio = document.getElementById("background-music");
-bkgndAudio.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
+	bkgndAudio.addEventListener('ended', function() {
+	    this.currentTime = 0;
+	    this.play();
+	}, false);
 
 
 
 // INITIALIZE SOUND EFFECTS
 // Load all SFX
+
 // saberSlice1.mp3, etc.
 // saberCrash1.mp3, etc.
 // Create the function that plays the SFX:
@@ -102,24 +123,122 @@ bkgndAudio.addEventListener('ended', function() {
 
 // INITIALIZE CHARACTERS
 // Create an object for each character, including Name, pic, atkStart, hpStart, def, id#, sfxSaberOn, sfxSaberOff
-// Display all characters in the charSelect div, including hpStart, atkStart, and def
-// Make character backgrounds white
+var luke = {
+	"name": "Luke Skywalker",
+	"img": "luke",
+	"id": "one",
+	"atkStart": 11,
+	"hpStart": 101,
+	"def": 10,
+	"sfxSaberOn": "assets/sfx/saberOnLuke.mp3",
+	"sfxSaberOff": "assets/sfx/saberOffLuke.mp3"
+}
 
-// if gameState == "newGame"
-	// Listen for player to click a character
+var obi = {
+	"name": "Obi-Wan Kenobi",
+	"img": "obi",
+	"id": "two",
+	"atkStart": 12,
+	"hpStart": 102,
+	"def": 10,
+	"sfxSaberOn": "assets/sfx/saberOnObi.mp3",
+	"sfxSaberOff": "assets/sfx/saberOffObi.mp3"
+}
+
+var maul = {
+	"name": "Darth Maul",
+	"img": "maul",
+	"id": "three",
+	"atkStart": 13,
+	"hpStart": 103,
+	"def": 10,
+	"sfxSaberOn": "assets/sfx/saberOnMaul.mp3",
+	"sfxSaberOff": "assets/sfx/saberOffMaul.mp3"
+}
+
+var vader = {
+	"name": "Darth Vader",
+	"img": "vader",
+	"id": "four",
+	"atkStart": 14,
+	"hpStart": 104,
+	"def": 10,
+	"sfxSaberOn": "assets/sfx/saberOnVader",
+	"sfxSaberOff": "saberOffVader"
+}
+
+// Create an array to hold the characters
+var allCharacters = [luke, obi, maul, vader];
+// console.log(allCharacters);
+
+// Display all characters and hpStart in the charSelect div
+for (var i = 0; i < allCharacters.length; i++) {
+	// For each iteration, we will create a div and image tag
+    var charDiv = $("<div>");
+    var charImg = $("<img>");
+
+    // Add classes, IDs, and attributes to the div using info in the character object
+    charDiv.addClass("char-th");
+    charDiv.attr("id", allCharacters[i].img);
+    // console.log(allCharacters[i].id);
+
+    // Link the correct thumbnail for each character
+    charImg.attr("src", "assets/images/" + allCharacters[i].img + "-th.png");
+    // console.log("assets/images/" + allCharacters[i].img + "-th.png");
+
+    // Append the new div to charSelect div the HTML
+    $("#charSelect").append(charDiv);
+    // Send the character, which will include the name, photo, and HP, to that new div in the HTML
+    $("#" + allCharacters[i].img).append("<p>" + allCharacters[i].name + "</p>");
+    $("#" + allCharacters[i].img).append(charImg);
+    $("#" + allCharacters[i].img).append("<p>" + allCharacters[i].hpStart + " HP</p>");
+}
+
+// Listen for player to click a character
+$(".char-th").on("click", function() {
+	if(gameState == "newGame") {
+		// Discover which character was selected and load that character's object
+		if(this.id == "luke") {
+			var playerChar = luke;
+		}
+		else if(this.id == "obi") {
+			var playerChar = obi;
+		}
+		else if(this.id == "vader") {
+			var playerChar = vader;
+		}
+		else {
+			var playerChar = maul;
+		}
+		console.log(playerChar);
 		// Set playerChar to the chosen character's object
+		$(this).hide();
 		// Move that character to the "player" div
+		var playerImg = $("<img>");
+		// console.log(this.id);
+		playerImg.addClass("img img-responsive playerImg");
+		playerImg.attr("src", "assets/images/" + playerChar.img + ".png");
+		$("#playerDiv").append(playerImg);
 		// set curHpPlayer = playerChar.hpStart & curAtkPlayer = playerChar.atkStart
+		curHpPlayer = playerChar.hpStart;
+		curAtkPlayer = playerChar.atkStart;
+		console.log(curHpPlayer);
+		console.log(curAtkPlayer);
 		// change all Character backgrounds to red
-		// Change playerChar background to gold
-		// play audio playerChar.sfxSaberOn
-		// play audio "background hum"
-		// play audio of character talking, if available
+		$(".char-th").css("background-color", "#dd0000");
 		// change charSelect div message to "Select Your Opponent"
-		// gameState = "enemySelect"
+		$("#charSelectTxt").html("<h1>Choose Your Opponent</h1>");
+		// play audio playerChar.sfxSaberOn
+		playAudio("saberOn" + playerChar.img);
+		// play audio "background hum"
+		setTimeout(playAudio, 500, "saberHum");
+		setTimeout(console.log("timeOut"), 100);
+		// play audio of character talking, if available
+		// reset the gameState so it doesn't look for a character click anymore
+		gameState = "enemySelect";
+	}
 
-// if gameState == "enemySelect"
-	// Listen for player to click an opponent
+	if(gameState == "enemySelect"){
 		// set enemyChar to the chosen opponent
 		// move the chosen opponent into the "enemy" div
 		// set curHpEnemy = enemyChar.hpStart
@@ -129,6 +248,15 @@ bkgndAudio.addEventListener('ended', function() {
 		// play audio of character talking, if available
 		// Display "Attack" button in "messages" div
 		// gameState ="fight"
+	}
+});
+
+saberHum.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+
+
 
 // if gameState == "fight"
 	// Listen for player to click "Attack" button
