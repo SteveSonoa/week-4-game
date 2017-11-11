@@ -1,21 +1,3 @@
-.container {
-	text-align: center;
-}
-
-.playerImg, .enemyImg {
-	display: inline-block;
-}
-
-.char-th {
-	display:inline-block;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	margin: 5px;
-	background-color: #fafafa;
-}
-
 body {
     background-repeat: no-repeat;
     background-position: center center;
@@ -41,4 +23,30 @@ p {
 	color: #333333;
 	padding: 0px;
 	margin: 0px;
+}
+
+.container {
+	text-align: center;
+}
+
+.playerImg, .enemyImg {
+	display: inline-block;
+}
+
+.char-th {
+	display:inline-block;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin: 5px;
+	background-color: #fafafa;
+}
+
+.progress-bar {
+	min-width: 2em;
+}
+
+#playerStats, #playerHpDiv, #playerHpBarDiv {
+	vertical-align: middle;
 }

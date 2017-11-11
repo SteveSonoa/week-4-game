@@ -46,9 +46,28 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="playerDiv"></div>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="messages"><h1>Buttons and messages</h1></div>
-			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12" id="enemyDiv"><h1>Enemy</h1></div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="playerDiv"></div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="messages">
+				<div class="container-float">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12" id="playerStats">
+							<div class="container-float">
+								<div class="row">
+									<!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="playerHpDiv"></div> -->
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="playerHpBarDiv"></div>
+								</div>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="playerAtkDiv"></div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="playerDefDiv"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12" id="actionButtons"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12" id="enemyStats"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="enemyDiv"><h1>Enemy</h1></div>
 		</div>
 	</div>
 
@@ -224,6 +243,17 @@ $(".char-th").on("click", function() {
 		curAtkPlayer = playerChar.atkStart;
 		console.log(curHpPlayer);
 		console.log(curAtkPlayer);
+		// Display the player's stats in playerStats div
+		// $("#playerHpDiv").append("<h2>HP</h2>");
+		$("#playerHpBarDiv").append("<h2><div class='progress'>" +
+  				"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + curHpPlayer + "' aria-valuemin='0' aria-valuemax='" + playerChar.hpStart + "' style='width: " + (( 100 * curHpPlayer)  / playerChar.hpStart) + "%'>" +
+    				"HP: " + curHpPlayer +
+				"</div>" +
+			"</div></h2>"
+		);
+		// console.log(curHpPlayer)
+		$("#playerAtkDiv").append("<h3>Attack: " + curAtkPlayer + "</h3>");
+		$("#playerDefDiv").append("<h3>Defense: " + playerChar.def + "</h3>");
 		// change all Character backgrounds to red
 		$(".char-th").css("background-color", "#dd0000");
 		// change charSelect div message to "Select Your Opponent"
