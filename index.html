@@ -53,7 +53,6 @@
 						<div class="col-lg-12 col-md-12 col-sm-12" id="playerStats">
 							<div class="container-float">
 								<div class="row">
-									<!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" id="playerHpDiv"></div> -->
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="playerHpBarDiv"></div>
 								</div>
 								<div class="row">
@@ -62,8 +61,18 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-12 col-md-12 col-sm-12" id="actionButtons"></div>
-						<div class="col-lg-12 col-md-12 col-sm-12" id="enemyStats"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 padding" id="actionButtons"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12" id="enemyStats">
+							<div class="container-float">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="enemyHpBarDiv"></div>
+								</div>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="enemyAtkDiv"></div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="enemyDefDiv"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -151,7 +160,7 @@ var luke = {
 	"def": 10,
 	"sfxSaberOn": "assets/sfx/saberOnLuke.mp3",
 	"sfxSaberOff": "assets/sfx/saberOffLuke.mp3"
-}
+};
 
 var obi = {
 	"name": "Obi-Wan Kenobi",
@@ -162,7 +171,7 @@ var obi = {
 	"def": 10,
 	"sfxSaberOn": "assets/sfx/saberOnObi.mp3",
 	"sfxSaberOff": "assets/sfx/saberOffObi.mp3"
-}
+};
 
 var maul = {
 	"name": "Darth Maul",
@@ -173,7 +182,7 @@ var maul = {
 	"def": 10,
 	"sfxSaberOn": "assets/sfx/saberOnMaul.mp3",
 	"sfxSaberOff": "assets/sfx/saberOffMaul.mp3"
-}
+};
 
 var vader = {
 	"name": "Darth Vader",
@@ -184,7 +193,7 @@ var vader = {
 	"def": 10,
 	"sfxSaberOn": "assets/sfx/saberOnVader",
 	"sfxSaberOff": "saberOffVader"
-}
+};
 
 // Create an array to hold the characters
 var allCharacters = [luke, obi, maul, vader];
@@ -229,7 +238,7 @@ $(".char-th").on("click", function() {
 		else {
 			var playerChar = maul;
 		}
-		console.log(playerChar);
+		// console.log(playerChar);
 		// Set playerChar to the chosen character's object
 		$(this).hide();
 		// Move that character to the "player" div
@@ -237,7 +246,7 @@ $(".char-th").on("click", function() {
 		// console.log(this.id);
 		playerImg.addClass("img img-responsive playerImg");
 		playerImg.attr("src", "assets/images/" + playerChar.img + ".png");
-		$("#playerDiv").append(playerImg);
+		$("#playerDiv").html(playerImg);
 		// set curHpPlayer = playerChar.hpStart & curAtkPlayer = playerChar.atkStart
 		curHpPlayer = playerChar.hpStart;
 		curAtkPlayer = playerChar.atkStart;
@@ -245,15 +254,15 @@ $(".char-th").on("click", function() {
 		console.log(curAtkPlayer);
 		// Display the player's stats in playerStats div
 		// $("#playerHpDiv").append("<h2>HP</h2>");
-		$("#playerHpBarDiv").append("<h2><div class='progress'>" +
+		$("#playerHpBarDiv").html("<div class='progress'>" +
   				"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + curHpPlayer + "' aria-valuemin='0' aria-valuemax='" + playerChar.hpStart + "' style='width: " + (( 100 * curHpPlayer)  / playerChar.hpStart) + "%'>" +
     				"HP: " + curHpPlayer +
 				"</div>" +
-			"</div></h2>"
+			"</div>"
 		);
 		// console.log(curHpPlayer)
-		$("#playerAtkDiv").append("<h3>Attack: " + curAtkPlayer + "</h3>");
-		$("#playerDefDiv").append("<h3>Defense: " + playerChar.def + "</h3>");
+		$("#playerAtkDiv").html("<h3>Attack: " + curAtkPlayer + "</h3>");
+		$("#playerDefDiv").html("<h3>Defense: " + playerChar.def + "</h3>");
 		// change all Character backgrounds to red
 		$(".char-th").css("background-color", "#dd0000");
 		// change charSelect div message to "Select Your Opponent"
@@ -268,16 +277,57 @@ $(".char-th").on("click", function() {
 		gameState = "enemySelect";
 	}
 
-	if(gameState == "enemySelect"){
+	else if(gameState == "enemySelect"){
 		// set enemyChar to the chosen opponent
-		// move the chosen opponent into the "enemy" div
-		// set curHpEnemy = enemyChar.hpStart
-		// change enemy bkgnd to black
-		// change charSelect div message to "Fight"
-		// play audio enemyCar.sfxSaberOn
-		// play audio of character talking, if available
+		if(this.id == "luke") {
+			var enemyChar = luke;
+		}
+		else if(this.id == "obi") {
+			var enemyChar = obi;
+		}
+		else if(this.id == "vader") {
+			var enemyChar = vader;
+		}
+		else {
+			var enemyChar = maul;
+		}
+		// console.log(playerChar);
+		// Set playerChar to the chosen character's object
+		$(this).hide();
+		// Move that character to the "player" div
+		var enemyImg = $("<img>");
+		// console.log(this.id);
+		enemyImg.addClass("img img-responsive playerImg");
+		enemyImg.attr("src", "assets/images/" + enemyChar.img + ".png");
+		$("#enemyDiv").html(enemyImg);
+		// set curHpPlayer = playerChar.hpStart & curAtkPlayer = playerChar.atkStart
+		curHpEnemy = enemyChar.hpStart;
+		console.log(curHpEnemy);
+		// Display the player's stats in playerStats div
+		// $("#playerHpDiv").append("<h2>HP</h2>");
+		$("#enemyHpBarDiv").html("<div class='progress'>" +
+  				"<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='" + curHpEnemy + "' aria-valuemin='0' aria-valuemax='" + enemyChar.hpStart + "' style='width: " + (( 100 * curHpEnemy)  / enemyChar.hpStart) + "%'>" +
+    				"HP: " + curHpEnemy +
+				"</div>" +
+			"</div>"
+		);
+		// console.log(curHpPlayer)
+		$("#enemyAtkDiv").html("<h3>Attack: " + enemyChar.atkStart + "</h3>");
+		$("#enemyDefDiv").html("<h3>Defense: " + enemyChar.def + "</h3>");
+		// change charSelect div message to "Select Your Opponent"
+		$("#charSelectTxt").html("<h1>Fight!!!</h1>");
+		// play audio playerChar.sfxSaberOn
+		playAudio("saberOn" + enemyChar.img);
+		gameState = "fight";
+		console.log(gameState);
+
+		$("#actionButtons").html(
+			"<div class='btn-group btn-group-justified' role='group' aria-label='...'>" +
+				"<button type='button' class='btn btn-default'>Attack</button>" +
+				"<button type='button' class='btn btn-default'>Heal</button>" +
+			+ "</div>"
+		);
 		// Display "Attack" button in "messages" div
-		// gameState ="fight"
 	}
 });
 
