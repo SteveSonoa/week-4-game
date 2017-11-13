@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -11,22 +12,28 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+	<!-- Load Font Awesome -->
+	<script src="https://use.fontawesome.com/e14e0f3537.js"></script>
+
+	<!-- Load local files -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script src="assets/css/functions.js"></script>
 
 	<title>Star Wars RPG</title>
 </head>
 <body>
 
-	<audio id="background-music"></audio>
-	<audio id="saberHum"><source src="assets/sfx/saberHum.mp3" type="audio/mpeg"></audio>
-	<audio id="saberOnluke"><source src="assets/sfx/saberOnLuke.mp3" type="audio/mpeg"></audio>
+<div id="audioStorage"></div>
+	<!-- <audio id="background-music"></audio> -->
+<!-- 	<audio id="saberHum"><source src="assets/sfx/saberHum.mp3" type="audio/mpeg"></audio> -->
+<!-- 	<audio id="saberOnluke"><source src="assets/sfx/saberOnLuke.mp3" type="audio/mpeg"></audio>
 	<audio id="saberOnobi"><source src="assets/sfx/saberOnObi.mp3" type="audio/mpeg"></audio>
 	<audio id="saberOnvader"><source src="assets/sfx/saberOnVader.mp3" type="audio/mpeg"></audio>
 	<audio id="saberOnmaul"><source src="assets/sfx/saberOnMaul.mp3" type="audio/mpeg"></audio>
 	<audio id="saberOffluke"><source src="assets/sfx/saberOffLuke.mp3" type="audio/mpeg"></audio>
 	<audio id="saberOffobi"><source src="assets/sfx/saberOffObi.mp3" type="audio/mpeg"></audio>
 	<audio id="saberOffvader"><source src="assets/sfx/saberOffVader.mp3" type="audio/mpeg"></audio>
-	<audio id="saberOffmaul"><source src="assets/sfx/saberOffMaul.mp3" type="audio/mpeg"></audio>
+	<audio id="saberOffmaul"><source src="assets/sfx/saberOffMaul.mp3" type="audio/mpeg"></audio> -->
 
 	
 
@@ -61,7 +68,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-12 col-md-12 col-sm-12 padding" id="actionButtons"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 padding" id="actionButtons">
+							<div class="container-float">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 fightBtn" id="atkBtn"></div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 fightBtn" id="healBtn"></div>
+								</div>
+							</div>
+						</div>
 						<div class="col-lg-12 col-md-12 col-sm-12" id="enemyStats">
 							<div class="container-float">
 								<div class="row">
@@ -76,7 +90,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="enemyDiv"><h1>Enemy</h1></div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="enemyDiv"></div>
 		</div>
 	</div>
 
@@ -103,9 +117,6 @@ VARIABLE LISTS
 
 
 // SET BACKGROUND IMAGES & AMBIENT MUSIC
-// Load all background music choices
-
-
 // Choose a random number from 0 - (# of background options)
 var bkgndVar = "bkgnd" + (Math.floor(Math.random() * 5)); //bkgnd2.png & bkgnd2.mp3 will be needed as filenames
 // console.log(bkgndVar);
@@ -113,11 +124,12 @@ var bkgndVar = "bkgnd" + (Math.floor(Math.random() * 5)); //bkgnd2.png & bkgnd2.
 $("body").css("background-image", "url(assets/images/" + bkgndVar + ".png)");
 // Use that random number to set the correct background music
 	// create a "source" item with "src" attribute set to "assets/sfx/"+bkgndVar+".mp3" & "type" set to "audio/mpeg" 
-	  var bkgndAudio = document.createElement("audio");
-	  bkgndAudio.setAttribute("src", "assets/sfx/" + bkgndVar + ".mp3");
-	  bkgndAudio.setAttribute("type", "audio/mpeg");
-	  $("#background-music").append(bkgndAudio);
-	  bkgndAudio.play();
+	var bkgndAudio = document.createElement("audio");
+	bkgndAudio.setAttribute("src", "assets/sfx/" + bkgndVar + ".mp3");
+	bkgndAudio.setAttribute("type", "audio/mpeg");
+	loadAudio("background-music");
+	$("#background-music").append(bkgndAudio);
+	bkgndAudio.play();
 // Loop that music endlessly
 	bkgndAudio.addEventListener('ended', function() {
 	    this.currentTime = 0;
@@ -128,9 +140,17 @@ $("body").css("background-image", "url(assets/images/" + bkgndVar + ".png)");
 
 // INITIALIZE SOUND EFFECTS
 // Load all SFX
+loadAudio("saberHum", "saberHum");
+loadAudio("saberOnluke", "saberOnluke");
+loadAudio("saberOffluke", "saberOffluke");
+loadAudio("saberOnobi", "saberOnobi");
+loadAudio("saberOffobi", "saberOffobi");
+loadAudio("saberOnvader", "saberOnvader");
+loadAudio("saberOffvader", "saberOffvader");
+loadAudio("saberOnmaul", "saberOnmaul");
+loadAudio("saberOffmaul", "saberOffmaul");
+loadAudio("saberCrash1", "saberCrash1");
 
-// saberSlice1.mp3, etc.
-// saberCrash1.mp3, etc.
 // Create the function that plays the SFX:
 	function playAudio(audioFile) { 
 		var x = document.getElementById(audioFile); 
@@ -145,12 +165,14 @@ $("body").css("background-image", "url(assets/images/" + bkgndVar + ".png)");
 
 // INITIALIZE VARIABLES
 	var curHpPlayer = 0, curAtkPlayer = 0, curHpEnemy = 0;
-//	var playerChar = none, enemyChar = none;
+	var enemyChar;
+	var playerChar;
+	var hasHeal = true;
 // GAME STATES: newGame, enemySelect, fight
 	var gameState = "newGame";
 
 // INITIALIZE CHARACTERS
-// Create an object for each character, including Name, pic, atkStart, hpStart, def, id#, sfxSaberOn, sfxSaberOff
+// Create an object for each character, including Name, pic, atkStart, hpStart, def, id, sfxSaberOn, sfxSaberOff
 var luke = {
 	"name": "Luke Skywalker",
 	"img": "luke",
@@ -197,6 +219,7 @@ var vader = {
 
 // Create an array to hold the characters
 var allCharacters = [luke, obi, maul, vader];
+var numCharsLeft = allCharacters.length;
 // console.log(allCharacters);
 
 // Display all characters and hpStart in the charSelect div
@@ -227,18 +250,20 @@ $(".char-th").on("click", function() {
 	if(gameState == "newGame") {
 		// Discover which character was selected and load that character's object
 		if(this.id == "luke") {
-			var playerChar = luke;
+			playerChar = luke;
 		}
 		else if(this.id == "obi") {
-			var playerChar = obi;
+			playerChar = obi;
 		}
 		else if(this.id == "vader") {
-			var playerChar = vader;
+			playerChar = vader;
 		}
 		else {
-			var playerChar = maul;
+			playerChar = maul;
 		}
 		// console.log(playerChar);
+		// Reduce the number of available characters by 1
+		numCharsLeft--;
 		// Set playerChar to the chosen character's object
 		$(this).hide();
 		// Move that character to the "player" div
@@ -250,13 +275,13 @@ $(".char-th").on("click", function() {
 		// set curHpPlayer = playerChar.hpStart & curAtkPlayer = playerChar.atkStart
 		curHpPlayer = playerChar.hpStart;
 		curAtkPlayer = playerChar.atkStart;
-		console.log(curHpPlayer);
-		console.log(curAtkPlayer);
+		// console.log(curHpPlayer);
+		// console.log(curAtkPlayer);
 		// Display the player's stats in playerStats div
 		// $("#playerHpDiv").append("<h2>HP</h2>");
 		$("#playerHpBarDiv").html("<div class='progress'>" +
   				"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + curHpPlayer + "' aria-valuemin='0' aria-valuemax='" + playerChar.hpStart + "' style='width: " + (( 100 * curHpPlayer)  / playerChar.hpStart) + "%'>" +
-    				"HP: " + curHpPlayer +
+    				curHpPlayer + " HP" +
 				"</div>" +
 			"</div>"
 		);
@@ -271,7 +296,7 @@ $(".char-th").on("click", function() {
 		playAudio("saberOn" + playerChar.img);
 		// play audio "background hum"
 		setTimeout(playAudio, 500, "saberHum");
-		setTimeout(console.log("timeOut"), 100);
+		// setTimeout(console.log("timeOut"), 100);
 		// play audio of character talking, if available
 		// reset the gameState so it doesn't look for a character click anymore
 		gameState = "enemySelect";
@@ -280,34 +305,36 @@ $(".char-th").on("click", function() {
 	else if(gameState == "enemySelect"){
 		// set enemyChar to the chosen opponent
 		if(this.id == "luke") {
-			var enemyChar = luke;
+			enemyChar = luke;
 		}
 		else if(this.id == "obi") {
-			var enemyChar = obi;
+			enemyChar = obi;
 		}
 		else if(this.id == "vader") {
-			var enemyChar = vader;
+			enemyChar = vader;
 		}
 		else {
-			var enemyChar = maul;
+			enemyChar = maul;
 		}
 		// console.log(playerChar);
+		// Reduce the number of available characters by 1
+		numCharsLeft--;
 		// Set playerChar to the chosen character's object
 		$(this).hide();
 		// Move that character to the "player" div
 		var enemyImg = $("<img>");
 		// console.log(this.id);
-		enemyImg.addClass("img img-responsive playerImg");
+		enemyImg.addClass("img img-responsive enemyImg");
 		enemyImg.attr("src", "assets/images/" + enemyChar.img + ".png");
 		$("#enemyDiv").html(enemyImg);
 		// set curHpPlayer = playerChar.hpStart & curAtkPlayer = playerChar.atkStart
 		curHpEnemy = enemyChar.hpStart;
-		console.log(curHpEnemy);
+		// console.log(curHpEnemy);
 		// Display the player's stats in playerStats div
 		// $("#playerHpDiv").append("<h2>HP</h2>");
 		$("#enemyHpBarDiv").html("<div class='progress'>" +
   				"<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='" + curHpEnemy + "' aria-valuemin='0' aria-valuemax='" + enemyChar.hpStart + "' style='width: " + (( 100 * curHpEnemy)  / enemyChar.hpStart) + "%'>" +
-    				"HP: " + curHpEnemy +
+    				curHpEnemy + " HP" +
 				"</div>" +
 			"</div>"
 		);
@@ -319,16 +346,14 @@ $(".char-th").on("click", function() {
 		// play audio playerChar.sfxSaberOn
 		playAudio("saberOn" + enemyChar.img);
 		gameState = "fight";
-		console.log(gameState);
+		// console.log(gameState);
 
-		$("#actionButtons").html(
-			"<div class='btn-group btn-group-justified' role='group' aria-label='...'>" +
-				"<button type='button' class='btn btn-default'>Attack</button>" +
-				"<button type='button' class='btn btn-default'>Heal</button>" +
-			+ "</div>"
-		);
+		$("#atkBtn").html("<button type='button' class='btn btn-primary btn-lg btn-block'><h2>Attack</h2></button>");
+		if(hasHeal) {
+			$("#healBtn").html("<button type='button' class='btn btn-primary btn-lg btn-block'><h2>Heal</h2></button>");
+		}
 		// Display "Attack" button in "messages" div
-	}
+	}	
 });
 
 saberHum.addEventListener('ended', function() {
@@ -337,41 +362,124 @@ saberHum.addEventListener('ended', function() {
 }, false);
 
 
-
-// if gameState == "fight"
-	// Listen for player to click "Attack" button
-		// curHpEnemy = curHpEnemy - curAtkPlayer;
-		// curAtkPlayer = curAtkPlayer * 2;
-		// if curHpEnemy > 0
-			// cur HpPlayer = curHpPlayer - enemyChar.atkStart
+$("#atkBtn").on("click", function() {
+	if(gameState == "fight") {
+		// Player attacks the enemy first
+		curHpEnemy = curHpEnemy - curAtkPlayer;
+		$("#enemyHpBarDiv").html("<div class='progress'>" +
+			"<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='" + curHpEnemy + "' aria-valuemin='0' aria-valuemax='" + enemyChar.hpStart + "' style='width: " + (( 100 * curHpEnemy)  / enemyChar.hpStart) + "%'>" +
+			curHpEnemy +
+			"</div>" +
+			"</div>"
+		);
+		// Player attack doubles after every attack
+		curAtkPlayer = curAtkPlayer * 2;
+		$("#playerAtkDiv").html("<h3>Attack: " + curAtkPlayer + "</h3>");
+		// If the enemy is still alive after the attack, he attacks back
+		if(curHpEnemy > 0) {
+			$("#enemyHpBarDiv").html("<div class='progress'>" +
+				"<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='" + curHpEnemy + "' aria-valuemin='0' aria-valuemax='" + enemyChar.hpStart + "' style='width: " + (( 100 * curHpEnemy)  / enemyChar.hpStart) + "%'>" +
+				curHpEnemy +
+				"</div>" +
+				"</div>"
+			);
+			curHpPlayer = curHpPlayer - enemyChar.atkStart;
+			$("#playerHpBarDiv").html("<div class='progress'>" +
+  				"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + curHpPlayer + "' aria-valuemin='0' aria-valuemax='" + playerChar.hpStart + "' style='width: " + (( 100 * curHpPlayer)  / playerChar.hpStart) + "%'>" +
+    				curHpPlayer +
+					"</div>" +
+				"</div>"
+			);
 			// play audio rngSfx("multiSaber"); // Selects a random multiSaber SFX
-			// if curHpPlayer <= 0
+			playAudio("saberCrash1");
+			// if the player dies in the counter attack
+			if(curHpPlayer <= 0) {
 				// play audio grunt & die
 				// play audio saber retract
+				playAudio("saberOff" + playerChar.img);
 				// Display "You Lose! Press any key to play again." in characters Div
+				$("#charSelectTxt").html("<h1>You Lose!</h1>");
 				// Listen for key press
 					// Move all characters to characters div
 					// curHpPlayer = 0, curAtkPlayer = 0, curHpEnemy = 0
 					// gameState = "newGame"
-		// else
+			}
+		}
+		// If the player's attack kills the enemy
+		else {
+			curHpEnemy = 0;
+			$("#enemyHpBarDiv").html("<div class='progress'>" +
+				"<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='" + curHpEnemy + "' aria-valuemin='0' aria-valuemax='" + enemyChar.hpStart + "' style='width: " + (( 100 * curHpEnemy)  / enemyChar.hpStart) + "%'>" +
+				curHpEnemy +
+				"</div>" +
+				"</div>"
+			);
 			// play audio rngSfx("singleSaber"); // Selects a random singleSaber SFX
 			// play audio enemy grunt & die
 			// play audio saber retract
+			playAudio("saberOff" + enemyChar.img);
 			// hide enemyChar
+			$(".enemyImg").hide();
 			// if no more characters to fight
+			if(numCharsLeft < 1){
 				// stop audio background hum
 				// play audio saber retract
 				// plaly audio victory fanfare
 				// display "You win! Press any key to play again." in characters div
+				$("#charSelectTxt").html("<h1>You Win!</h1>");
 				// Listen for key press
 					// Move all characters to characters div
 					// curHpPlayer, curAtkPlayer, curHpEnemy = 0
 					// gameState = "newGame"
-			// else
-				// display "Choose Your Next Opponent" in Char Select Screen
-				// gameState = enemySelect
-// 
+				}
+			else {
+				// change charSelect div message to "Select Your Opponent"
+				$("#charSelectTxt").html("<h1>Choose Your Next Opponent</h1>");
+				// change gameState to listen for an enemy click
+				gameState = "enemySelect";
+			}
+		}
+	}
+});
 
+$("#healBtn").on("click", function() {
+	// Make sure Heal hasn't yet been used
+	if(hasHeal) {
+		// Increase the player's health by 100
+		curHpPlayer = curHpPlayer + 100;
+		// Do not exceed Max HP
+		if(curHpPlayer > playerChar.hpStart) {
+			curHpPlayer = playerChar.hpStart;
+		}
+		// Play healing SFX
+		// Redraw Player's HP bar
+		$("#playerHpBarDiv").html("<div class='progress'>" +
+				"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + curHpPlayer + "' aria-valuemin='0' aria-valuemax='" + playerChar.hpStart + "' style='width: " + (( 100 * curHpPlayer)  / playerChar.hpStart) + "%'>" +
+				curHpPlayer +
+				"</div>" +
+			"</div>"
+		);
+		// Disable heal
+		hasHeal = false;
+		$("#healBtn").html("<button type='button' class='btn btn-warning btn-lg btn-block' id='btnNoHeal'><h2 id='noHeal'>Heal</h2></button>");
+		// If there is an enemy, it still hits the player
+		if(curHpEnemy > 0) {
+			$("#enemyHpBarDiv").html("<div class='progress'>" +
+				"<div class='progress-bar progress-bar-danger' role='progressbar' aria-valuenow='" + curHpEnemy + "' aria-valuemin='0' aria-valuemax='" + enemyChar.hpStart + "' style='width: " + (( 100 * curHpEnemy)  / enemyChar.hpStart) + "%'>" +
+				curHpEnemy +
+				"</div>" +
+				"</div>"
+			);
+			curHpPlayer = curHpPlayer - enemyChar.atkStart;
+			$("#playerHpBarDiv").html("<div class='progress'>" +
+  				"<div class='progress-bar progress-bar-success' role='progressbar' aria-valuenow='" + curHpPlayer + "' aria-valuemin='0' aria-valuemax='" + playerChar.hpStart + "' style='width: " + (( 100 * curHpPlayer)  / playerChar.hpStart) + "%'>" +
+    				curHpPlayer +
+					"</div>" +
+				"</div>"
+			);
+		}
+	}
+});
 
 </script>
 

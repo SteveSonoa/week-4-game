@@ -36,6 +36,8 @@ p {
 
 .playerImg, .enemyImg {
 	display: inline-block;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .progress-bar {
@@ -63,7 +65,7 @@ p {
 }
 
 .progress-bar {
-	min-width: 2em;
+	min-width: 1em;
 	font-size: 24px;
 	line-height: 50px;
 
@@ -77,6 +79,14 @@ p {
 .padding {
 	margin-top: 25px;
 	margin-bottom: 25px;
+}
+
+#btnNoHeal {
+	background-color: #999999;
+}
+
+#noHeal {
+	color: #999999;
 }
 
 #playerStats, #playerHpDiv, #playerHpBarDiv {
