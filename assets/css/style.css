@@ -6,6 +6,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-color: #000000;
 }
 
 h1, h2, h3 {
@@ -91,4 +92,27 @@ p {
 
 #playerStats, #playerHpDiv, #playerHpBarDiv {
 	vertical-align: middle;
+}
+
+#btnReset {
+	width: 100%;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-bottom: 10px;
+	font-size: 48px;
+	color: #dddddd;
+	font-weight: bold;
+	text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}
+
+#loading {
+	position: fixed;
+	bottom: 33%;
+	width: 100%;
+	text-align: center;
 }
