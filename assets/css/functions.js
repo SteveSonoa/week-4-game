@@ -157,12 +157,12 @@ function playerAttack() {
 }
 
 function enemyAttack() {
-	if(playerChar.img == "luke") {
-		curHpPlayer = curHpPlayer - (enemyChar.atkStart + (5 * (allCharacters.length - numCharsLeft)) - (enemyChar.atkStart * (playerChar.def / 100)));
-	}
-	else {
+	// if(playerChar.img == "luke") {
+	// 	curHpPlayer = curHpPlayer - (enemyChar.atkStart + (5 * (allCharacters.length - numCharsLeft)) - (enemyChar.atkStart * (playerChar.def / 100)));
+	// }
+	// else {
 		curHpPlayer = curHpPlayer - (enemyChar.atkStart + (10 * (allCharacters.length - numCharsLeft)) - (enemyChar.atkStart * (playerChar.def / 100)));
-	}
+	// }
 	if(hasHeal1 || hasHeal2) {
 		curHpPlayer = curHpPlayer - 10;
 	}
