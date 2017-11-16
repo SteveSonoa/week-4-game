@@ -7,6 +7,7 @@ var luke = {
 	"atkStart": 15,
 	"hpStart": 150,
 	"def": 35,
+	"side": "rebel",
 	"sfxSaberOn": "assets/sfx/saberOnLuke.mp3",
 	"sfxSaberOff": "assets/sfx/saberOffLuke.mp3"
 };
@@ -18,6 +19,7 @@ var obi = {
 	"atkStart": 15,
 	"hpStart": 175,
 	"def": 40,
+	"side": "rebel",
 	"sfxSaberOn": "assets/sfx/saberOnObi.mp3",
 	"sfxSaberOff": "assets/sfx/saberOffObi.mp3"
 };
@@ -29,6 +31,7 @@ var maul = {
 	"atkStart": 35,
 	"hpStart": 160,
 	"def": 0,
+	"side": "empire",
 	"sfxSaberOn": "assets/sfx/saberOnMaul.mp3",
 	"sfxSaberOff": "assets/sfx/saberOffMaul.mp3"
 };
@@ -40,6 +43,7 @@ var vader = {
 	"atkStart": 25,
 	"hpStart": 200,
 	"def": 10,
+	"side": "empire",
 	"sfxSaberOn": "assets/sfx/saberOnVader",
 	"sfxSaberOff": "saberOffVader"
 };
