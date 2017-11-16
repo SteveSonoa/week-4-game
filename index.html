@@ -62,7 +62,8 @@
 							<div class="container-float">
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 fightBtn" id="atkBtn"></div>
-									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 fightBtn" id="healBtn"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 fightBtn" id="healBtn1"></div>
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 fightBtn" id="healBtn2"></div>
 								</div>
 							</div>
 						</div>
@@ -208,19 +209,22 @@
 				gameState = "fight";
 
 				$("#atkBtn").html("<button type='button' class='btn btn-primary btn-lg btn-block'><h2>Attack</h2></button>");
-				if(hasHeal) {
-					$("#healBtn").html("<button type='button' class='btn btn-primary btn-lg btn-block'><h2>Heal</h2></button>");
+				if(hasHeal1) {
+					$("#healBtn1").html("<button type='button' class='btn btn-default btn-lg btn-block btnHeal'><i class='fa fa-plus' aria-hidden='true'></i></button>");
+				}
+				if(hasHeal2) {
+					$("#healBtn2").html("<button type='button' class='btn btn-default btn-lg btn-block btnHeal'><i class='fa fa-plus' aria-hidden='true'></i></button>");
 				}
 				// Display "Attack" button in "messages" div
 			}	
 		});
 
 		// Always repeat the player's lightsaber hum
+		// $(document).on("ended", "#background-music", function() {
 		saberHum.addEventListener('ended', function() {
-		    this.currentTime = 0;
-		    this.play();
+		    saberHum.currentTime = 0;
+		    saberHum.play();
 		}, false);
-
 
 		// $("#atkBtn").on("click", function() {
 		$(document).on("click", "#atkBtn", function() {
@@ -300,15 +304,42 @@
 			}
 		});
 
-		$(document).on("click", "#healBtn", function() {
+		$(document).on("click", "#healBtn1", function() {
 		// $("#healBtn").on("click", function() {
 			// Make sure Heal hasn't yet been used
-			if(hasHeal && gameState != "gameOver") {
+			if(hasHeal1 && gameState != "gameOver") {
 				// Heal HP
 				healPlayer();
 				// Disable heal for future use
-				hasHeal = false;
-				$("#healBtn").html("<button type='button' class='btn btn-warning btn-lg btn-block' id='btnNoHeal'><h2 id='noHeal'>Heal</h2></button>");
+				hasHeal1 = false;
+				$("#healBtn1").html("<button type='button' class='btn btn-warning btn-lg btn-block btnNoHeal'><i class='fa fa-plus' aria-hidden='true'></i></button>");
+				// If there is an enemy, it still hits the player
+				if(curHpEnemy > 0) {
+					curHpPlayer = curHpPlayer - (enemyChar.atkStart * 2);
+					// Play healing SFX
+					if(enemyChar.img == "vader") {
+						playAudio("vaderHeal");
+						// Redraw Player's HP bar
+						setTimeout(drawPlayerStats, 3000);
+					}
+					else {
+						playAudio(playerChar.img + "Grunt");
+						setTimeout(drawPlayerStats, 300);
+					}
+					// Play Player's grunting SFX
+					drawEnemyStats();
+				}
+			}
+		});
+			$(document).on("click", "#healBtn2", function() {
+			// $("#healBtn").on("click", function() {
+			// Make sure Heal hasn't yet been used
+			if(hasHeal2 && gameState != "gameOver") {
+				// Heal HP
+				healPlayer();
+				// Disable heal for future use
+				hasHeal2 = false;
+				$("#healBtn2").html("<button type='button' class='btn btn-warning btn-lg btn-block btnNoHeal'><i class='fa fa-plus' aria-hidden='true'></i></button>");
 				// If there is an enemy, it still hits the player
 				if(curHpEnemy > 0) {
 					curHpPlayer = curHpPlayer - (enemyChar.atkStart * 2);

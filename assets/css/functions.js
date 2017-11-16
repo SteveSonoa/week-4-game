@@ -163,7 +163,7 @@ function enemyAttack() {
 	else {
 		curHpPlayer = curHpPlayer - (enemyChar.atkStart + (10 * (allCharacters.length - numCharsLeft)) - (enemyChar.atkStart * (playerChar.def / 100)));
 	}
-	if(hasHeal) {
+	if(hasHeal1 || hasHeal2) {
 		curHpPlayer = curHpPlayer - 10;
 	}
 }
@@ -188,13 +188,15 @@ function resetGame() {
 	$("#enemyAtkDiv").empty();
 	$("#enemyDefDiv").empty();
 	$("#atkBtn").empty();
-	$("#healBtn").empty();
+	$("#healBtn1").empty();
+	$("#healBtn2").empty();
 	drawCharSelect(allCharacters);
 	numCharsLeft = allCharacters.length;
 	curHpPlayer = 0;
 	curHpEnemy = 0;
 	curAtkPlayer = 0;
-	hasHeal = true;
+	hasHeal1 = true;
+	hasHeal2 = true;
 	bkgndAmbient.pause();
 	bkgndAmbient = newScene();
 	bkgndAmbient.play();

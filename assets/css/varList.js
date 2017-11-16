@@ -54,6 +54,7 @@ var cntCrash = 1;
 var enemyChar;
 var playerChar;
 var bkgndAmbient;
-var hasHeal = true;
+var hasHeal1 = true;
+var hasHeal2 = true;
 // GAME STATES: newGame, enemySelect, fight, gameOver
 var gameState = "newGame";

@@ -82,12 +82,13 @@ p {
 	margin-bottom: 25px;
 }
 
-#btnNoHeal {
+.btnNoHeal {
 	background-color: #999999;
+	color: #666666;
 }
 
-#noHeal {
-	color: #999999;
+.btnHeal {
+	color: #ff3333;
 }
 
 #playerStats, #playerHpDiv, #playerHpBarDiv {
