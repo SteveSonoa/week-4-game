@@ -242,7 +242,6 @@
 						playAudio(playerChar.img + "Lose");
 						// play audio saber retract
 						setTimeout(playAudio, 1500, "saberOff" + playerChar.img);
-						setTimeout(playAudio, 2500, enemyChar.img + "Win");
 						saberHum.pause();
 						// Display "You Lose! Press any key to play again." in characters Div
 						$("#charSelectTxt").html("<h1>You Lose!</h1>");
@@ -251,7 +250,7 @@
 						btnPlayAgain();
 						$(document).on("click", "#btnReset", function() {
 						// $("#btnReset").on("click", function() {
-							resetGame();
+						resetGame();
 						});
 						// Listen for key press
 							// Move all characters to characters div

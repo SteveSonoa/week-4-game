@@ -211,21 +211,7 @@ function btnPlayAgain() {
 
 function playerWinAudio() {
 	playAudio("gameOverWin");
-	if(playerChar.img == "luke" && enemyChar.img == "obi") {
-		setTimeout(playAudio, 3000 , "lukeWinObi");
-	}
-	else if(playerChar.img == "luke" && enemyChar.img == "vader") {
-		setTimeout(playAudio, 3000 , "lukeWinVader");
-	}
-	else if(playerChar.img == "obi" && enemyChar.img == "vader") {
-		setTimeout(playAudio, 3000 , "obiWinVader");
-	}
-	else if(playerChar.img == "vader" && enemyChar.img == "obi") {
-		setTimeout(playAudio, 3000 , "vaderWinObi");
-	}
-	else {
-		setTimeout(playAudio, 3000 , playerChar.img + "Win");
-	}
+	setTimeout(playAudio, 3000 , playerChar.img + "Win");
 }
 
 function playerLoseAudio() {
@@ -243,7 +229,7 @@ function playerLoseAudio() {
 		setTimeout(playAudio, 3000 , "vaderWinObi");
 	}
 	else {
-		setTimeout(playAudio, 3000 , playerChar.img + "Win");
+		setTimeout(playAudio, 3000 , enemyChar.img + "Win");
 	}
 }
 
